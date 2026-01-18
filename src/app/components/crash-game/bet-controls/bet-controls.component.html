@@ -1,0 +1,31 @@
+<div class="mb-6 bg-[#262828] p-4 rounded-xl border border-white/5 shadow-lg">
+    <div class="flex justify-between items-center mb-3">
+        <label class="text-xs font-medium text-slate-400 uppercase tracking-wider">Bet Amount</label>
+        <div class="text-xs text-slate-500">Max: $1000.00</div>
+    </div>
+    
+    <div class="flex items-center gap-3">
+        <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-slate-400">$</span>
+            </div>
+            <input type="number" 
+                   [ngModel]="betAmount"
+                   (ngModelChange)="onBetAmountChange($event)"
+                   [disabled]="phase !== 'BETTING' || isBetting"
+                   [min]="1" 
+                   [max]="1000" 
+                   [step]="1"
+                   (blur)="onValidateBetAmount()"
+                   class="w-full bg-[#1F2121] text-white font-medium text-lg rounded-lg border border-white/10 focus:border-[#20B4C6] focus:ring-1 focus:ring-[#20B4C6] pl-7 pr-3 py-3 outline-none transition-all placeholder-slate-600 appearance-none disabled:opacity-50">
+        </div>
+        <div class="flex gap-2">
+            <button (click)="onAdjustBet(0.5)" 
+                    [disabled]="phase !== 'BETTING' || isBetting"
+                    class="px-3 py-3 rounded-lg bg-[#1F2121] border border-white/10 text-xs font-medium text-slate-300 hover:bg-white/5 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">½</button>
+            <button (click)="onAdjustBet(2)" 
+                    [disabled]="phase !== 'BETTING' || isBetting"
+                    class="px-3 py-3 rounded-lg bg-[#1F2121] border border-white/10 text-xs font-medium text-slate-300 hover:bg-white/5 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">2×</button>
+        </div>
+    </div>
+</div>
