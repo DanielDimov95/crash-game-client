@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom ranges for slider if needed */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #20B4C6;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: #374151;
+  border-radius: 2px;
+}
+
+.pulse-ring {
+  box-shadow: 0 0 0 0 rgba(32, 180, 198, 0.7);
+  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(32, 180, 198, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(32, 180, 198, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(32, 180, 198, 0); }
+}
+
+.animate-pop {
+  animation: pop 0.1s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
