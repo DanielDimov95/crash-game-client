@@ -43,8 +43,8 @@ export class CrashGameComponent implements OnInit, OnDestroy {
   balanceFlash: boolean = false;
 
   private subscriptions: Subscription[] = [];
-  private countdownInterval: any = null;
-  private crashedRoundTimeout: any = null;
+  private countdownInterval: ReturnType<typeof setInterval> | null = null;
+  private crashedRoundTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     private signalRService: SignalRService,
@@ -210,7 +210,9 @@ export class CrashGameComponent implements OnInit, OnDestroy {
     this.countdownInterval = setInterval(() => {
       this.countdown--;
       if (this.countdown <= 0) {
-        clearInterval(this.countdownInterval);
+        if (this.countdownInterval) {
+          clearInterval(this.countdownInterval);
+        }
         this.countdownInterval = null;
       }
     }, 1000);
@@ -312,8 +314,8 @@ export class CrashGameComponent implements OnInit, OnDestroy {
     this.isBetting = true;
 
     this.apiService.placeBet(this.currentRoundId, this.betAmount).subscribe({
-      next: (response: any) => {
-        if (response && response.betReferenceId) {
+      next: (response) => {
+        if (response?.betReferenceId) {
           this.currentBetReferenceId = response.betReferenceId;
         }
       },

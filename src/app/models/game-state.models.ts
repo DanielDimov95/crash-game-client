@@ -33,8 +33,36 @@ export interface IGameBetState {
 }
 
 export interface IBetState {
-  // Add bet state properties as needed
-  [key: string]: any;
+  // Bet state properties - can be extended as needed
+  [key: string]: unknown;
+}
+
+export interface IBet {
+  betReferenceId: string;
+  amount: number;
+  cashedOut: boolean;
+  cashoutMultiplier?: number;
+  gameRoundId?: number;
+  roundReferenceId?: string;
+  [key: string]: unknown;
+}
+
+export interface IPlaceBetResponse {
+  betReferenceId: string;
+  success?: boolean;
+  [key: string]: unknown;
+}
+
+export interface ICashOutBetResponse {
+  success: boolean;
+  betReferenceId?: string;
+  [key: string]: unknown;
+}
+
+export interface IBalanceResponse {
+  data: number;
+  success: boolean;
+  error: null;
 }
 
 export interface ICrashStateResponse {
@@ -43,8 +71,8 @@ export interface ICrashStateResponse {
   data: {
     gameRoundId: number;
     roundReferenceId: string;
-    myBets: any[];
-    allBets: any[];
+    myBets: IBet[];
+    allBets: IBet[];
     gameState: IGameState;
     historyMultipliers: number[];
     sequence: number | null;

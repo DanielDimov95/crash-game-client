@@ -25,7 +25,7 @@ export class SignalRService {
 
   private reconnectAttempts = 0;
   private readonly maxReconnectAttempts = 10;
-  private reconnectTimeout: any = null;
+  private reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     this.startConnection();
