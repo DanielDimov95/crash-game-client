@@ -8,4 +8,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, HttpClientModule)
   ]
-}).catch(err => console.error(err));
+}).catch(() => {
+  // Bootstrap failed - application cannot start
+});

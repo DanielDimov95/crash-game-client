@@ -65,19 +65,16 @@ export class SignalRService {
       this.debitResultSubject.next(data);
     });
 
-    this.hubConnection.onreconnecting((error) => {
-      console.warn('SignalR reconnecting...', error);
+    this.hubConnection.onreconnecting(() => {
       this.connectionStateSubject.next(false);
     });
 
-    this.hubConnection.onreconnected((connectionId) => {
-      console.log('SignalR reconnected:', connectionId);
+    this.hubConnection.onreconnected(() => {
       this.reconnectAttempts = 0;
       this.connectionStateSubject.next(true);
     });
 
-    this.hubConnection.onclose((error) => {
-      console.error('SignalR connection closed:', error);
+    this.hubConnection.onclose(() => {
       this.connectionStateSubject.next(false);
       this.handleReconnect();
     });
@@ -88,8 +85,7 @@ export class SignalRService {
       await this.hubConnection?.start();
       this.connectionStateSubject.next(true);
       this.reconnectAttempts = 0;
-    } catch (error) {
-      console.error('Error starting SignalR connection:', error);
+    } catch {
       this.connectionStateSubject.next(false);
       this.handleReconnect();
     }
@@ -97,7 +93,6 @@ export class SignalRService {
 
   private handleReconnect(): void {
     if (this.reconnectAttempts >= this.maxReconnectAttempts) {
-      console.error('Max reconnect attempts reached');
       return;
     }
 
@@ -110,7 +105,6 @@ export class SignalRService {
 
     this.reconnectTimeout = setTimeout(() => {
       if (this.hubConnection?.state === HubConnectionState.Disconnected) {
-        console.log(`Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
         this.start();
       }
     }, delay);
