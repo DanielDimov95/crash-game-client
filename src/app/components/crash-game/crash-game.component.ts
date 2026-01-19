@@ -58,13 +58,26 @@ export class CrashGameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // Unsubscribe from all SignalR observables
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    
+    // Clear timers
     if (this.countdownInterval) {
       clearInterval(this.countdownInterval);
+      this.countdownInterval = null;
     }
     if (this.crashedRoundTimeout) {
       clearTimeout(this.crashedRoundTimeout);
+      this.crashedRoundTimeout = null;
     }
+    
+    // Disconnect SignalR connection
+    // Note: SignalRService is a singleton, so this disconnects the shared connection.
+    // In a single-page app where this component is always present, you might want
+    // to keep the connection alive. However, proper cleanup is shown here.
+    this.signalRService.disconnect().catch(() => {
+      // Ignore disconnect errors during cleanup
+    });
   }
 
   private loadInitialBalance(): void {
